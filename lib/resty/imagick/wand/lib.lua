@@ -148,9 +148,12 @@ ffi.cdef([[
   double PixelGetBlue(const PixelWand *);
 
   void PixelSetAlpha(PixelWand *wand, const double alpha);
+  void PixelSetColor(PixelWand *wand, const char *color);
   void PixelSetRed(PixelWand *wand, const double red);
   void PixelSetGreen(PixelWand *wand, const double green);
   void PixelSetBlue(PixelWand *wand, const double blue);
+
+  void PixelSetOpacity(PixelWand *wand,const double opacity);
 
   MagickBooleanType MagickTransposeImage(MagickWand *wand);
 

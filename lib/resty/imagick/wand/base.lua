@@ -391,11 +391,13 @@ end
 
 _M.border = function(self, border_color, w, h, compose)
     w, h = self:_keep_aspect(w, h)
-    return handle_result(self, lib.MagickBorderImage(self.wand, border_color,
+	local pixelwand = ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
+	lib.PixelSetColor(pixelwand,border_color)
+    return handle_result(self, lib.MagickBorderImage(self.wand, pixelwand,
       w, h, compose))
 end
 
-_M.charoal = function(self, sigma, radius)
+_M.charcoal = function(self, sigma, radius)
     return handle_result(self, lib.MagickCharcoalImage(self.wand, radius,
       sigma))
 end
@@ -433,8 +435,15 @@ _M.color_decision_list = function(self, length)
 end
 
 _M.colorize = function(self, colorize, blend)
+	local pixelcolor = ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
+	lib.PixelSetColor(pixelcolor,colorize)
+	local pixeloptical = ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
+	lib.PixelSetRed(pixeloptical, blend);
+	lib.PixelSetGreen(pixeloptical, blend);
+	lib.PixelSetBlue(pixeloptical, blend);
+	lib.PixelSetOpacity(pixeloptical, blend);
     return handle_result(self, lib.MagickColorizeImage(self.wand,
-      colorize, blend))
+      pixelcolor, pixeloptical))
 end
 
 _M.color_matrix = function(self, color_matrix)
@@ -968,7 +977,7 @@ _M.normalize = function(self)
 end
 
 _M.oil_paint = function(self, radius, sigma)
-    return handle_result(self, lib.MagickOilPaintImage(radius, sigma))
+    return handle_result(self, lib.MagickOilPaintImage(self.wand,radius, sigma))
 end
 
 _M.opaque_paint = function(self, target, fill, fuzz, invert)
@@ -1035,7 +1044,7 @@ _M.quantizes = function(self, num_corlors, colorspace, treedepth, method,
       distort_method():to_int(method .. "DitherMethod"), measure_error))
 end
 
-_M.ratational_blur = function(self, angle)
+_M.rotational_blur = function(self, angle)
     return handle_result(self, lib.MagickRotationalBlurImage(self.wand,
       angle))
 end
