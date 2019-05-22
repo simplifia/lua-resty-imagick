@@ -31,7 +31,7 @@ local compression_type = wand_data.compression_type
 local dispose_type = wand_data.dispose_type
 local endian_type = wand_data.endian_type
 local image_type = wand_data.image_type
-local resolution_type = wand_data.resolution_type 
+local resolution_type = wand_data.resolution_type
 local metric_type = wand_data.metric_type
 local preview_type = wand_data.preview_type
 local statistic_type = wand_data.statistic_type
@@ -359,7 +359,7 @@ _M.auto_orient = function(self)
     return handle_result(self, lib.MagickAutoOrientImage(self.wand))
 end
 
-_M.auto_gama = function(self)
+_M.auto_gamma = function(self)
     return handle_result(self, lib.MagickAutoGammaImage(self.wand))
 end
 
@@ -394,7 +394,7 @@ _M.border = function(self, border_color, w, h, compose)
 	local pixelwand = ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
 	lib.PixelSetColor(pixelwand,border_color)
     return handle_result(self, lib.MagickBorderImage(self.wand, pixelwand,
-      w, h, compose))
+      w, h, composite_operators():to_int(compose .. "CompositeOp")))
 end
 
 _M.charcoal = function(self, sigma, radius)
@@ -484,6 +484,10 @@ end
 
 _M.contrast = function(self, sharpen)
     return handle_result(self, lib.MagickContrastImage(self.wand, sharpen))
+end
+
+_M.brightness_contrast = function(self, brightness, contrast)
+    return handle_result(self, lib.MagickBrightnessContrastImage(self.wand, brightness, contrast))
 end
 
 _M.contrast_stretch = function(self, black, white)
