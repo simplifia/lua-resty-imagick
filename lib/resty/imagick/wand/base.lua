@@ -649,7 +649,9 @@ _M.inverse_fourier_transform = function(self, phase_wand, magnitude)
 end
 
 _M.frame = function(self, matte_color, w, h, inner_level, outer_level, compose)
-    return handle_result(self, lib.MagickFrameImage(self.wand, matte_color,
+    local pixelwand = ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
+    lib.PixelSetColor(pixelwand,matte_color)
+    return handle_result(self, lib.MagickFrameImage(self.wand, pixelwand,
       w, h, inner_level, outer_level,
       composite_operators():to_int(compose .. "CompositeOp")))
 end
@@ -1413,10 +1415,15 @@ _M.vignette = function(self, radius, sigma, x, y)
       radius, sigma, x, y))
 end
 
-_M.wavel = function(self, amplitude, wave_length, method)
+_M.wave = function(self, amplitude, wave_length, method)
     return handle_result(self, lib.MagickWaveImage(self.wand, amplitude,
       wave_length,
       pixel_interpolate_method():to_int(method .. "InterpolatePixel")))
+end
+
+_M.denoise = function(self, threshold, softness)
+    return handle_result(self, lib.MagickWaveletDenoiseImage(self.wand, threshold,
+        softness))
 end
 
 _M.white_threshold = function(self, threshold)

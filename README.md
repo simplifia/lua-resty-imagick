@@ -299,10 +299,31 @@ as images are tracked by the garbage collector.
 -----
 Animates an image or image sequence.
 
+`img:auto_gamma()`
+-----
+Auto enhance gamma.
+
+`img:auto_level()`
+-----
+Auto enhance level.
+
+`img:auto_orient()`
+-----
+Auto rotate image base on orient.
+
 `img:black_threshold(threshold)`
 -----
 Like MagickThresholdImage() but forces all pixels below the threshold into black 
 while leaving all pixels above the threshold unchanged.
+
+`img:blue_shift(<double> factor)`
+-----
+Mutes the colors of the image to simulate a scene at nighttime in the moonlight.
+
+`img:brightness_contrast(<int> brightness, <int> contrast)`
+-----
+Change the brightness and/or contrast of an image. It converts the brightness and contrast parameters into slope and intercept and calls a polynomical function to apply to the image.
+Parameter between -100:100
 
 `img:border(border_color, width, height, compose)`
 -----
@@ -1230,6 +1251,14 @@ The goal is to produce small low cost thumbnail images suited for display on the
 Applies a color vector to each pixel in the image. The length of the vector is 0 for black and white and at its maximum for the midtones. 
 The vector weighting function is f(x)=(1-(4.0*((x-0.5)*(x-0.5)))).
 
+`img:transpose()`
+-----
+Creates a vertical mirror image by reflecting the pixels around the central x-axis while rotating them 90-degrees.
+
+`img:transverse()`
+-----
+Creates a horizontal mirror image by reflecting the pixels around the central y-axis while rotating them 270-degrees.
+
 `img:transform_colorspace(colorspace)`
 -----
 Transform the image colorspace, setting the images colorspace while transforming the images data to that colorspace.
@@ -1258,6 +1287,10 @@ Softens the edges of the image in vignette style.
 `img:wave(amplitude, wave_length, method)`
 -----
 Creates a "ripple" effect in the image by shifting the pixels vertically along a sine wave whose amplitude and wavelength is specified by the given parameters.
+
+`img:denoise(<double> threshold, <double> softness)`
+-----
+Removes noise from the image using a wavelet transform.
 
 `img:white_threshold(threshold)`
 -----

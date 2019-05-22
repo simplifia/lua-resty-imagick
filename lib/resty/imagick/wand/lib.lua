@@ -780,6 +780,9 @@ ffi.cdef([[
     const double amplitude,const double wave_length,
     const PixelInterpolateMethod method);
 
+  MagickBooleanType MagickWaveletDenoiseImage(MagickWand *wand,
+  const double threshold,const double softness);
+
   MagickBooleanType MagickWhiteThresholdImage(MagickWand *wand,
   const PixelWand *threshold);
 
@@ -814,12 +817,13 @@ local try_to_load = function(...)
 end
 
 local libname = function()
-    local proc = open("pkg-config --cflags --libs MagickWand", "r")
-    local flags = proc:read("*a")
-    proc:close()
-    if flags == nil then
-        flags =  "-lMagickWand-7.Q16HDRI"
-    end
+    -- force run library version 7
+    -- local proc = open("pkg-config --cflags --libs MagickWand", "r")
+    -- local flags = proc:read("*a")
+    -- proc:close()
+    -- if flags == nil then
+        local flags =  "-lMagickWand-7.Q16HDRI"
+    -- end
 
     local lname = flags:match("-l(MagickWand[^%s]*)")
     local suffix
