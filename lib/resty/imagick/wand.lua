@@ -3,7 +3,7 @@
 
 local modulename = "restyImagickWand"
 local _M = {}
-_M._VERSION = '0.0.1'
+_M._VERSION = '0.0.3'
 _M._NAME = modulename
 
 local lib = require("resty.imagick.wand.lib").lib
@@ -22,6 +22,8 @@ _M.load_image = image.load
 _M.thumb = make_thumb(image.load)
 
 _M.load_image_from_blob = image.load_from_blob
+
+_M.new = image.new
 
 _M.Pixel = pixel.new
 

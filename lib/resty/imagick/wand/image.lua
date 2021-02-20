@@ -18,6 +18,11 @@ local get_exception = function(wand)
     return etype[0], msg
 end
 
+_M.new = function()
+    local wand = ffi.gc(lib.NewMagickWand(), lib.DestroyMagickWand)
+    return wand_base:new(wand, "<none>")
+end
+
 _M.load = function(path)
     local wand = ffi.gc(lib.NewMagickWand(), lib.DestroyMagickWand)
     if 0 == lib.MagickReadImage(wand, path) then
