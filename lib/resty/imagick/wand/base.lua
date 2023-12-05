@@ -264,7 +264,7 @@ _M.get_blob = function(self)
     local len = ffi.new("size_t[1]", 0)
     local blob = ffi.gc(lib.MagickGetImageBlob(self.wand, len),
       lib.MagickRelinquishMemory)
-    return ffi.string(blob, len[0])
+    return ffi.string(blob, len[0]), len[0]
 end
 
 _M.write = function(self, fname)
@@ -1086,7 +1086,7 @@ _M.remove = function(self)
     return handle_result(self, lib.MagickRemoveImage(self.wand))
 end
 
-_M.resample = function(self, x_esolution, y_resolution, filter)
+_M.resample = function(self, x_resolution, y_resolution, filter)
     return handle_result(self, lib.MagickResampleImage(self.wand, x_resolution,
       y_resolution, filter_type():to_int(filter .. "Filter")))
 end

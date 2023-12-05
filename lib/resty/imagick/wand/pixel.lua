@@ -10,8 +10,12 @@ local wand_lib = require("resty.imagick.wand.lib")
 
 local lib = wand_lib.lib
 
-_M.new = function()
-    return ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
+_M.new = function(color)
+    local pixelcolor = ffi.gc(lib.NewPixelWand(), lib.DestroyPixelWand)
+	if color then
+        lib.PixelSetColor(pixelcolor, color)
+    end
+    return pixelcolor
 end
 
 return _M
