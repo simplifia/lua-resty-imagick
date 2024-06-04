@@ -817,13 +817,9 @@ local try_to_load = function(...)
 end
 
 local libname = function()
-    -- force run library version 7
-    -- local proc = open("pkg-config --cflags --libs MagickWand", "r")
-    -- local flags = proc:read("*a")
-    -- proc:close()
-    -- if flags == nil then
-        local flags =  "-lMagickWand-7.Q16HDRI"
-    -- end
+    local proc = open("pkg-config --cflags --libs MagickWand", "r")
+    local flags = proc:read("*a")
+    proc:close()
 
     local lname = flags:match("-l(MagickWand[^%s]*)")
     local suffix

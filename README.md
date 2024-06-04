@@ -48,7 +48,7 @@ $ brew install imagemagick
 It's recommended to use opm to install **lua-resty-imagick**.
 
 ```bash
-$ opm install lua-resty-imagick
+$ opm get topalex/lua-resty-imagick
 ```
 [Back to TOC](#table-of-contents)
 
