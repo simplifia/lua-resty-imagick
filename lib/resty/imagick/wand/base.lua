@@ -340,7 +340,7 @@ end
 
 _M.set_interlace_scheme = function(self, itype)
     itype = assert(interlace():to_int(itype .. "Interlace"), "invalid interlace type")
-    return lib.MagickSetImageInterlaceScheme(self.wand, itype)
+    return lib.MagickSetInterlaceScheme(self.wand, itype)
 end
 
 _M.get_profile = function(self, profile)

@@ -172,7 +172,7 @@ ffi.cdef([[
     const OrientationType orientation);
 
   InterlaceType MagickGetImageInterlaceScheme(MagickWand *wand);
-  MagickBooleanType MagickSetImageInterlaceScheme(MagickWand *wand,
+  MagickBooleanType MagickSetInterlaceScheme(MagickWand *wand,
     const InterlaceType interlace_scheme);
 
   MagickBooleanType MagickAutoOrientImage(MagickWand *wand);
