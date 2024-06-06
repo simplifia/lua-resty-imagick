@@ -267,10 +267,6 @@ _M.get_blob = function(self)
     return ffi.string(blob, len[0]), len[0]
 end
 
-_M.write = function(self, fname)
-    return handle_result(self, lib.MagickWriteImage(self.wand, fname))
-end
-
 _M.destroy = function(self)
     if self.wand then
         lib.DestroyMagickWand(ffi.gc(self.wand, nil))
@@ -549,47 +545,47 @@ _M._keep_aspect = function(self, w, h)
     end
 end
 
-_M.resize_and_crop = function(self, w, h)
+_M.resize_and_crop = function(self, w, h, f, blur)
     local src_w, src_h = self:get_width(), self:get_height()
     local ar_src = src_w / src_h
     local ar_dest = w / h
     if ar_dest == ar_src then
-        return self:resize(w, h)
+        return self:resize(w, h, f, blur)
     elseif ar_dest > ar_src then
         local new_height = w / ar_src
-        self:resize(w, new_height)
+        self:resize(w, new_height, f, blur)
         return self:crop(w, h, 0, (new_height - h) / 2)
     else
         local new_width = h * ar_src
-        self:resize(new_width, h)
+        self:resize(new_width, h, f, blur)
         return self:crop(w, h, (new_width - w) / 2, 0)
     end
 end
 
-_M.scale_and_crop = function(self, w, h)
+_M.scale_and_crop = function(self, w, h, f, blur)
     local src_w, src_h = self:get_width(), self:get_height()
     local ar_src = src_w / src_h
     local ar_dest = w / h
     if ar_dest > ar_src then
         local new_height = w / ar_src
-        self:resize(w, new_height)
+        self:resize(w, new_height, f, blur)
         return self:scale(w, h)
     else
         local new_width = h * ar_src
-        self:resize(new_width, h)
+        self:resize(new_width, h, f, blur)
         return self:scale(w, h)
     end
 end
 
-_M.thumb = function(self, size_str)
+_M.thumb = function(self, size_str, f, blur)
     local src_w, src_h = self:get_width(), self:get_height()
     local opts = assert(thumb.parse_size_str(size_str, src_w, src_h))
     if opts.center_crop then
-        self:resize_and_crop(opts.w, opts.h)
+        self:resize_and_crop(opts.w, opts.h, f, blur)
     elseif opts.crop_x then
         self:crop(opts.w, opts.h, opts.crop_x, opts.crop_y)
     else
-        self:resize(opts.w, opts.h)
+        self:resize(opts.w, opts.h, f, blur)
     end
     return true
 end
