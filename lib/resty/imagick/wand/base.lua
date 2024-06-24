@@ -264,7 +264,11 @@ _M.get_blob = function(self)
     local len = ffi.new("size_t[1]", 0)
     local blob = ffi.gc(lib.MagickGetImageBlob(self.wand, len),
       lib.MagickRelinquishMemory)
-    return ffi.string(blob, len[0]), len[0]
+    return ffi.string(blob, len[0]), tonumber(len[0])
+end
+
+_M.reset_iterator = function(self)
+    lib.MagickResetIterator(self.wand)
 end
 
 _M.destroy = function(self)
@@ -690,7 +694,7 @@ _M.get_blobs = function(self)
     local len = ffi.new("size_t[1]", 0)
     local blob = ffi.gc(lib.MagickGetImagesBlob(self.wand, len),
       lib.MagickRelinquishMemory)
-    return ffi.string(blob, len[0])
+    return ffi.string(blob, len[0]), tonumber(len[0])
 end
 
 _M.get_blue_primary = function(self, x, y, z)

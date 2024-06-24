@@ -91,6 +91,7 @@ ffi.cdef([[
   unsigned char* MagickGetImageBlob(MagickWand*, size_t*);
 
   void* MagickRelinquishMemory(void*);
+  void MagickResetIterator(MagickWand*);
 
   MagickBooleanType MagickCropImage(MagickWand*,
     const size_t, const size_t, const ssize_t, const ssize_t);
