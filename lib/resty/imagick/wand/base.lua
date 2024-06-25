@@ -3,7 +3,7 @@
 
 local modulename = 'restyImagickWandBase'
 local _M = {}
-local mt = { __index = _M }
+local mt = {}
 _M._NAME = modulename
 _M.__name = "Image"
 
@@ -70,6 +70,7 @@ end
 _M.new = function(self, wand, path)
     self.wand = wand
     self.path = path
+    self.pixel_wand = nil
     return setmetatable(self, mt)
 end
 
