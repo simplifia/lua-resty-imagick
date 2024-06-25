@@ -3,7 +3,7 @@
 
 local modulename = "restyImagickWand"
 local _M = {}
-_M._VERSION = '0.0.10'
+_M._VERSION = '0.0.11'
 _M._NAME = modulename
 
 local lib = require("resty.imagick.wand.lib").lib
