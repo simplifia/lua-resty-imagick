@@ -1255,7 +1255,7 @@ _M.set_rendering_intent = function(self, intent)
 end
 
 _M.set_resolution = function(self, x_resolution, y_resolution)
-    return handle_result(self, lib.MagickSetImageResolution(self.wand,
+    return handle_result(self, lib.MagickSetResolution(self.wand,
       x_resolution, y_resolution))
 end
 

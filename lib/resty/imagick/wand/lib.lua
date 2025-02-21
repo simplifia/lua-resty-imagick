@@ -796,6 +796,9 @@ ffi.cdef([[
     const char *filename,const MagickBooleanType adjoin);
 
   MagickBooleanType MagickWriteImagesFile(MagickWand *wand,FILE *file);
+
+
+  MagickBooleanType MagickSetResolution(MagickWand *wand, const double x_resolution,const double y_resolution);
 ]])
 
 local try_to_load = function(...)
